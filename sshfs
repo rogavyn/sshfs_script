@@ -4,11 +4,11 @@ FILE="./folders"
 SOURCE=$(head -n 1 folders)
 DEST=$(tail -n 1 folders)
 while true; do
-    read -p "What do you want to do? [m/u/h] or 'c' to cancel >" INIT
+    read -p "What do you want to do? [m/u/k] or 'c' to cancel >" INIT
     case $INIT in
-        [Mm]* ) $(sshfs -o reconnect $SOURCE $DEST); break;;
-        [Uu]* ) $(umount -l $DEST && fusermount -u $DEST); break;;
-        [Hh]* ) PROC=($(ps -ef | grep "sshfs -o reconnect"));
+        [Mm]* ) $(sshfs -o reconnect $SOURCE $DEST); break;; #mount the remote directory according to folders specified in ./folders
+        [Uu]* ) $(umount -l $DEST && fusermount -u $DEST); break;; #clean unmount
+        [Kk]* ) PROC=($(ps -ef | grep "sshfs -o reconnect")); #kill the process if it hangs
                 kill -9 ${PROC[1]};
                 (umount -l $DEST && fusermount -u $DEST); break;;
         [Cc]* ) exit;;
