@@ -1,8 +1,8 @@
 #!/bin/bash
 
-FILE="./folders"
-SOURCE=$(head -n 1 folders)
-DEST=$(tail -n 1 folders)
+DIR="$(dirname "$(readlink -f "$0")")"
+SOURCE=$(head -n 1 <$DIR/folders)
+DEST=$(tail -n 1 <$DIR/folders)
 while true; do
     read -p "What do you want to do? [m/u/k] or 'c' to cancel >" INIT
     case $INIT in
